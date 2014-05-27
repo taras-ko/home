@@ -1,0 +1,64 @@
+export host=78.27.171.82
+export CSCOPE_DB=/home/x0170753/cscope/cscope.out
+alias mount='sudo mount'
+alias umount='sudo umount'
+
+alias d='dirs -v'
+alias j='jobs'
+#vim
+alias vims='vim -S'
+#alias less='less -N'
+
+#git
+alias gl='git log'
+alias br='git branch'
+alias ch='git checkout'
+alias gits='git status -s'
+alias gitl='git show-graph'
+alias glog='git log --graph'
+alias gsend='git send-email --smtp-server /usr/bin/msmtp --from "Taras Koroliuk <taras.koroliuk@ti.com>" --envelope-sender="Taras Koroliuk <taras.koroliuk@ti.com>" --suppress-cc=all'
+export GIT_EDITOR=vim
+
+#feh
+alias feh='feh -Z --scale-down --draw-filename --force-aliasing'
+
+alias b='beep'
+alias bs='beeps'
+
+#lpr
+alias lpr='lpr -o cpi=15 -o lpi=9'
+
+alias x11vnc='x11vnc -display :0 -rfbauth ~/.x11vnc/passwd -forever'
+
+export LESS_TERMCAP_mb=$'\E[01;31m'       # начала мигающего
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # начало жирного текста
+export LESS_TERMCAP_me=$'\E[0m'           # окончание
+export LESS_TERMCAP_so=$'\E[01;44;33m'    # searchable highlight
+export LESS_TERMCAP_se=$'\E[0m'           # конец его
+export LESS_TERMCAP_us=$'\E[04;38;5;146m' # начало подчеркнутого
+export LESS_TERMCAP_ue=$'\E[0m'           # конец подчеркнутого
+
+alias lsblk='sudo fdisk -l'
+
+pm() # pmount
+{
+	if [[ -n $1 ]]; then
+		pmount $1
+		export STICK=$1
+	fi
+}
+
+pu() # pumount
+{
+	local target
+	if [[ -n $1 ]]; then
+		target=$1
+	elif [[ -n $STICK ]]; then
+		target=$STICK
+	else
+		echo "Error: couldn't find."
+		return
+	fi
+
+	pumount $target
+}

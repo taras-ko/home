@@ -1,0 +1,9 @@
+clear mod1
+clear mod4
+
+!uncoment for ultraVNC-windows
+!add mod1 = Alt_L
+
+!uncomment to restore defaults
+add mod4 = Alt_R
+add mod1 = Alt_L

@@ -1,0 +1,26 @@
+source $HOME/.workrc
+source $HOME/.commonrc
+
+alias su='su -s /usr/bin/zsh'
+
+alias xo='xclip -o'
+alias apt-get='sudo apt-get'
+alias aptitude='sudo aptitude'
+alias fdisk='sudo fdisk'
+alias mount='sudo mount'
+alias umount='sudo umount'
+
+#aliases for files
+alias -s {pdf,djvu}=mupdf
+alias -s {ps}=gv
+alias -s {txt,csv,ts,ptl}=less
+alias -s {c,disasm,s,log}='less -N'
+alias -s {ts}=vim
+
+# History searching
+bindkey    "^[[A" history-beginning-search-backward
+bindkey    "^[[B" history-beginning-search-forward
+
+precmd () {
+	echo -ne '\a'
+}

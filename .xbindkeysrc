@@ -1,0 +1,16 @@
+"i3-msg border normal"
+b:6
+"i3-msg border 1pixel"
+b:7
+
+#"xsel --exchange"
+#b:6
+#"xsel --exchange"
+#b:7
+
+#"transset-df --min 0.1 -p --dec 0.2"
+# control + b:4
+#
+#"transset-df -p --inc 0.1"
+# control + b:5
+
