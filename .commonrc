@@ -1,21 +1,19 @@
 export host=78.27.171.82
-export CSCOPE_DB=/home/x0170753/cscope/cscope.out
-alias mount='sudo mount'
-alias umount='sudo umount'
+
+#cscope
+export CSCOPE_DB=$HOME/cscope/cscope.out
+alias cs='cscope -bqk'
 
 alias d='dirs -v'
 alias j='jobs'
-#vim
-alias vims='vim -S'
-#alias less='less -N'
 
 #git
 alias gl='git log'
-alias br='git branch'
+alias br='git branch -a'
 alias ch='git checkout'
 alias gits='git status -s'
-alias gitl='git show-graph'
-alias glog='git log --graph'
+alias gitl='git log --graph'
+alias glog='git show-graph'
 alias gsend='git send-email --smtp-server /usr/bin/msmtp --from "Taras Koroliuk <taras.koroliuk@ti.com>" --envelope-sender="Taras Koroliuk <taras.koroliuk@ti.com>" --suppress-cc=all'
 export GIT_EDITOR=vim
 
@@ -62,3 +60,6 @@ pu() # pumount
 
 	pumount $target
 }
+
+#pacman
+alias pacman='sudo pacman'

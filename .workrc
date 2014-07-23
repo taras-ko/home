@@ -1,0 +1,86 @@
+select_device()
+{
+	devices=(`adb devices | sed '1d' | awk '{ print $1 }'`)
+
+	if [[ ${#devices} -le 1 ]]; then
+		adbdev='null'
+		return
+	fi
+
+	echo Select device:
+
+	select adbdev in ${devices}
+	do
+		break;
+	done
+	echo $adbdev >/tmp/adbdev
+
+	alias adb="adb -s $adbdev"
+}
+
+ash() {
+	eval adb shell su -c "$@"
+}
+
+adbs() {
+	if [[ -z $adbdev && ! -e /tmp/adbdev ]]; then
+		select_device
+	fi
+}
+
+if [[ -n /tmp/adbdev ]]; then
+	adbdev=`cat /tmp/adbdev`
+	alias adb="adb -s $adbdev"
+fi
+
+alias sdev='select_device'
+alias adev='adb devices'
+alias ar='adb root'
+alias arb='adb reboot'
+alias apush='adb push'
+alias apull='adb pull'
+
+alias ndk-stack="clear; adb logcat | ndk-stack -sym obj/local/armeabi"
+alias atlas="atlas&"
+alias arm="ash busybox mount -o remount,rw /system"
+
+alias restart_ril='ash setprop ctl.restart gsm0710muxd'
+
+work=~/src/work
+gw=$work/librtpgw
+atlas=$work/atlas
+mt6589=$work/kernel_mt6589
+audio=$mt6589/mediatek/platform/common/hardware/audio
+
+export mt6589
+
+hack_mtk_ril()
+{
+	local hacked_ril=$(find $atlas -name librilw.so)
+	adb push $hacked_ril /sdcard/
+
+	ash "mount -o rw,remount /system";
+	ash "cp /system/lib/mtk-ril.so /system/lib/mtk-ril.so.orig";
+	ash "mv /system/lib/mtk-ril.so /system/lib/mtk-ril.so.locked";
+	ash "cp /sdcard/`basename $hacked_ril` /system/lib/mtk-ril.so";
+	ash "chmod 666 /system/lib/mtk-ril.so";
+	restart_ril
+}
+
+unhack_mtk_ril()
+{
+	ash "mount -o rw,remount /system";
+	ash "cp /system/lib/mtk-ril.so.orig /system/lib/mtk-ril.so";
+	ash "chmod 666 /system/lib/mtk-ril.so";
+	restart_ril
+}
+
+alog() {
+	local filter=$1
+
+	if [[ -n $filter ]]; then
+		eval adb logcat -s $filter | logcat
+	else
+		eval adb logcat | logcat
+	fi
+}

@@ -1,2 +1,5 @@
 set hintchars=hjklasdfgyuiopqwertnmzxcvb
 set editor="urxvt -e vim -f"
+
+"discard highlighting
+nnoremap <silent> <Space> :nohlsearch<Bar>:match<Bar>:echo<CR>
